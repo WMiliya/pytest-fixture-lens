@@ -9,6 +9,7 @@
   <p>Offline HTML + JSON reports for pytest fixture setup cost, reuse, and dependencies.</p>
 
   <p>
+    <a href="https://pypi.org/project/pytest-fixture-lens/"><img alt="PyPI" src="https://img.shields.io/pypi/v/pytest-fixture-lens.svg"></a>
     <a href="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml/badge.svg"></a>
     <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
     <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
@@ -23,7 +24,8 @@
     <a href="#what-you-get">What you get</a> ·
     <a href="docs/how-it-works.md">How it works</a> ·
     <a href="docs/faq.md">FAQ</a> ·
-    <a href="docs/publishing.md">Publishing</a>
+    <a href="docs/publishing.md">Publishing</a> ·
+    <a href="docs/pypi.md">PyPI</a>
   </p>
 </div>
 
@@ -60,7 +62,13 @@ Then open `examples/demo_project/report.html`.
 
 ## Quickstart
 
-Install from a checkout:
+Install from PyPI (available after the first release — see [docs/pypi.md](docs/pypi.md)):
+
+```bash
+pip install pytest-fixture-lens
+```
+
+Or install from a checkout:
 
 ```bash
 python -m pip install -e .

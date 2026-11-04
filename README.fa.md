@@ -20,6 +20,7 @@
 </div>
 
 <div align="center">
+  <a href="https://pypi.org/project/pytest-fixture-lens/"><img alt="PyPI" src="https://img.shields.io/pypi/v/pytest-fixture-lens.svg"></a>
   <a href="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
@@ -67,7 +68,17 @@ pytest examples/demo_project/tests --fixture-lens --fixture-lens-dir examples/de
 
 ## شروع سریع
 
-نصب از روی مخزن:
+نصب از PyPI:
+
+</div>
+
+```bash
+pip install pytest-fixture-lens
+```
+
+<div dir="rtl">
+
+یا نصب از روی مخزن:
 
 </div>
 
@@ -76,6 +87,8 @@ python -m pip install -e .
 ```
 
 <div dir="rtl">
+
+نصب از PyPI بعد از اولین انتشار فعال می‌شود؛ راهنما در [docs/pypi.md](docs/pypi.md).
 
 اجرای تست‌ها با پلاگین فعال:
 
