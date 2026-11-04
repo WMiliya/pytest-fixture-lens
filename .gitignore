@@ -11,3 +11,5 @@ dist/
 htmlcov/
 .fixturelens/
 *.log
+preview-fa.html
+preview-en.html

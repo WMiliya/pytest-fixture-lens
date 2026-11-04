@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="README.md"><b>English</b></a> · <a href="README.fa.md">فارسی</a>
+</p>
+
 <div align="center">
   <img src="assets/banner.png" alt="FixtureLens — see which pytest fixtures your tests build, reuse, and pay for" width="860">
   <h1>FixtureLens</h1>
