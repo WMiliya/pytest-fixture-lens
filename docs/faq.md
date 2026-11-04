@@ -34,4 +34,11 @@ No. It reports fixtures observed in the selected test run. Unused-fixture detect
 
 ## Is it published on PyPI?
 
-Not yet. Install from a checkout for now.
+Yes: <https://pypi.org/project/pytest-fixture-lens/>
+
+```bash
+pip install pytest-fixture-lens
+```
+
+Releases are published from GitHub Actions using PyPI Trusted Publishing, so no API token is
+stored anywhere. See [pypi.md](pypi.md).

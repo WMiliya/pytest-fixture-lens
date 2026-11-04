@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-fixture-lens"
-version = "0.1.0"
+version = "0.1.1"
 description = "See which pytest fixtures your tests build, reuse, and pay for — as an offline HTML report."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,7 +27,7 @@ classifiers = [
 dependencies = ["pytest>=8,<10"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "ruff>=0.6", "pillow>=10"]
+dev = ["pytest>=8,<10", "ruff>=0.6", "pillow>=10", "markdown>=3.5"]
 
 [project.urls]
 Homepage = "https://github.com/WMiliya/pytest-fixture-lens"

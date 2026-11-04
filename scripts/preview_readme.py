@@ -85,9 +85,15 @@ body {
 """
 
 
+RAW_PREFIX = "https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/"
+
+
 def embed_images(html: str) -> str:
     def repl(match: re.Match[str]) -> str:
         src = match.group(1)
+        # READMEs use absolute URLs so PyPI renders them; map back to local files offline.
+        if src.startswith(RAW_PREFIX):
+            src = src[len(RAW_PREFIX) :]
         if src.startswith(("http://", "https://", "data:")):
             # Remote badges cannot load offline; swap in a small inline placeholder.
             if src.startswith("data:"):

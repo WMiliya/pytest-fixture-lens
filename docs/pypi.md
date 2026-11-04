@@ -28,10 +28,15 @@ Register at <https://pypi.org/account/register/> and verify your email.
 
 **Enable 2FA.** PyPI requires two-factor authentication on accounts that upload packages.
 
-### 2. Register a pending trusted publisher
+### 2. Register a trusted publisher
 
-Because the project does not exist on PyPI yet, register a *pending* publisher. This also
-reserves the project name.
+> **Already done for this project.** `pytest-fixture-lens` 0.1.0 is live on PyPI and the
+> trusted publisher is registered. The steps below are kept for reference, for forks, or for
+> renaming the workflow or environment.
+
+For a brand-new project, register a *pending* publisher — this also reserves the project name.
+For a project that already exists on PyPI, use the project's own
+**Settings → Publishing** page instead of the account-level pending form.
 
 Go to <https://pypi.org/manage/account/publishing/> and choose
 **Add a new pending publisher → GitHub Actions**, then enter exactly:
@@ -58,6 +63,11 @@ yourself as a required reviewer so every publish needs your approval.
 ### 1. Bump the version
 
 Edit `version` in `pyproject.toml` and add a section to `CHANGELOG.md`.
+
+The PyPI project page is rendered from the README **inside the uploaded package**, so a README
+fix only appears on PyPI after a new release. Keep image and link URLs in the READMEs absolute
+(`https://raw.githubusercontent.com/...` for images); relative paths render on GitHub but break
+on PyPI. `tests/test_readme_assets.py` guards this.
 
 A version can never be reused on PyPI. If a release is broken, bump the number
 (for example `0.1.1`) and release again — do not try to re-upload `0.1.0`.
@@ -106,7 +116,7 @@ python -m twine check dist/*
 Inspect the wheel:
 
 ```bash
-python -c "import zipfile; print('\n'.join(zipfile.ZipFile('dist/pytest_fixture_lens-0.1.0-py3-none-any.whl').namelist()))"
+python -c "import zipfile; print('\n'.join(zipfile.ZipFile('dist/pytest_fixture_lens-0.1.1-py3-none-any.whl').namelist()))"
 ```
 
 The wheel must contain `fixturelens/templates/report.html`, `fixturelens/py.typed`, and an

@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="README.md"><b>English</b></a> · <a href="README.fa.md">فارسی</a>
+  <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/README.md"><b>English</b></a> · <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/README.fa.md">فارسی</a>
 </p>
 
 <div align="center">
-  <img src="assets/banner.png" alt="FixtureLens — see which pytest fixtures your tests build, reuse, and pay for" width="860">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/banner.png" alt="FixtureLens — see which pytest fixtures your tests build, reuse, and pay for" width="860">
   <h1>FixtureLens</h1>
   <p><strong>See which pytest fixtures your tests actually build, reuse, and pay for.</strong></p>
   <p>Offline HTML + JSON reports for pytest fixture setup cost, reuse, and dependencies.</p>
@@ -11,21 +11,21 @@
   <p>
     <a href="https://pypi.org/project/pytest-fixture-lens/"><img alt="PyPI" src="https://img.shields.io/pypi/v/pytest-fixture-lens.svg"></a>
     <a href="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml/badge.svg"></a>
-    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
     <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
     <img alt="pytest 8/9" src="https://img.shields.io/badge/pytest-8%20%7C%209-0A9EDC.svg">
     <a href="https://github.com/astral-sh/ruff"><img alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json"></a>
-    <a href="CONTRIBUTING.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/CONTRIBUTING.md"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   </p>
 
   <p>
     <a href="#quickstart">Quickstart</a> ·
     <a href="#demo">Demo</a> ·
     <a href="#what-you-get">What you get</a> ·
-    <a href="docs/how-it-works.md">How it works</a> ·
-    <a href="docs/faq.md">FAQ</a> ·
-    <a href="docs/publishing.md">Publishing</a> ·
-    <a href="docs/pypi.md">PyPI</a>
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/how-it-works.md">How it works</a> ·
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/faq.md">FAQ</a> ·
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/publishing.md">Publishing</a> ·
+    <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/pypi.md">PyPI</a>
   </p>
 </div>
 
@@ -55,14 +55,14 @@ pytest examples/demo_project/tests --fixture-lens --fixture-lens-dir examples/de
 Then open `examples/demo_project/report.html`.
 
 <div align="center">
-  <img src="assets/demo.gif" alt="Terminal demo: pytest --fixture-lens writes an offline report" width="760">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/demo.gif" alt="Terminal demo: pytest --fixture-lens writes an offline report" width="760">
   <br><br>
-  <img src="assets/report-preview.png" alt="FixtureLens report preview with hotspots and dependency graph" width="900">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/report-preview.png" alt="FixtureLens report preview with hotspots and dependency graph" width="900">
 </div>
 
 ## Quickstart
 
-Install from PyPI (available after the first release — see [docs/pypi.md](docs/pypi.md)):
+Install from PyPI:
 
 ```bash
 pip install pytest-fixture-lens
@@ -98,7 +98,9 @@ Custom output directory:
 pytest --fixture-lens --fixture-lens-dir build/fixturelens
 ```
 
-> Status: alpha MVP. The distribution name `pytest-fixture-lens` is planned, but not published to PyPI yet.
+> Status: alpha (`0.1.0`), available on PyPI. The API and report schema may still change.
+> Release history: [CHANGELOG](https://github.com/WMiliya/pytest-fixture-lens/blob/main/CHANGELOG.md) ·
+> publishing process: [docs/pypi.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/pypi.md).
 
 ## What you get
 
@@ -156,7 +158,7 @@ FixtureLens uses pytest hooks:
 - `pytest_runtest_logreport` to record test outcomes.
 - `pytest_sessionfinish` to write `report.html` and `report.json`.
 
-See [docs/how-it-works.md](docs/how-it-works.md) for details and [docs/report-schema.md](docs/report-schema.md) for the JSON shape.
+See [docs/how-it-works.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/how-it-works.md) for details and [docs/report-schema.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/report-schema.md) for the JSON shape.
 
 ## Limitations
 
@@ -214,14 +216,14 @@ Good next contributions:
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Small, tested changes are welcome. Please do not include real secrets, private test names, or proprietary fixture data in reports or issues.
+See [CONTRIBUTING.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/CONTRIBUTING.md). Small, tested changes are welcome. Please do not include real secrets, private test names, or proprietary fixture data in reports or issues.
 
 ## Support and security
 
-- Support: [SUPPORT.md](SUPPORT.md)
-- Security: [SECURITY.md](SECURITY.md)
-- Code of conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- Support: [SUPPORT.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/SUPPORT.md)
+- Security: [SECURITY.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/SECURITY.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/CODE_OF_CONDUCT.md)
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](https://github.com/WMiliya/pytest-fixture-lens/blob/main/LICENSE).

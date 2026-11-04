@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="README.md">English</a> · <a href="README.fa.md"><b>فارسی</b></a>
+  <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/README.md">English</a> · <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/README.fa.md"><b>فارسی</b></a>
 </p>
 
 <div align="center">
-  <img src="assets/banner.png" alt="FixtureLens" width="860">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/banner.png" alt="FixtureLens" width="860">
   <h1>FixtureLens</h1>
 </div>
 
@@ -15,14 +15,14 @@
 
 بدون اینترنت، بدون منابع خارجی، بدون حساب کاربری، بدون هوش مصنوعی.
 
-> وضعیت: نسخهٔ آلفا. نام بسته `pytest-fixture-lens` در نظر گرفته شده اما هنوز روی PyPI منتشر نشده است.
+> وضعیت: نسخهٔ آلفا (`0.1.0`)، روی PyPI منتشر شده است. رابط برنامه‌نویسی و ساختار گزارش هنوز ممکن است تغییر کند.
 
 </div>
 
 <div align="center">
   <a href="https://pypi.org/project/pytest-fixture-lens/"><img alt="PyPI" src="https://img.shields.io/pypi/v/pytest-fixture-lens.svg"></a>
   <a href="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/WMiliya/pytest-fixture-lens/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="https://github.com/WMiliya/pytest-fixture-lens/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
   <img alt="pytest 8/9" src="https://img.shields.io/badge/pytest-8%20%7C%209-0A9EDC.svg">
 </div>
@@ -59,9 +59,9 @@ pytest examples/demo_project/tests --fixture-lens --fixture-lens-dir examples/de
 </div>
 
 <div align="center">
-  <img src="assets/demo.gif" alt="دموی ترمینال" width="760">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/demo.gif" alt="دموی ترمینال" width="760">
   <br><br>
-  <img src="assets/report-preview.png" alt="پیش‌نمایش گزارش" width="900">
+  <img src="https://raw.githubusercontent.com/WMiliya/pytest-fixture-lens/main/assets/report-preview.png" alt="پیش‌نمایش گزارش" width="900">
 </div>
 
 <div dir="rtl">
@@ -87,8 +87,6 @@ python -m pip install -e .
 ```
 
 <div dir="rtl">
-
-نصب از PyPI بعد از اولین انتشار فعال می‌شود؛ راهنما در [docs/pypi.md](docs/pypi.md).
 
 اجرای تست‌ها با پلاگین فعال:
 
@@ -190,7 +188,7 @@ FixtureLens از هوک‌های pytest استفاده می‌کند:
 - `pytest_runtest_logreport` برای ثبت نتیجهٔ تست‌ها
 - `pytest_sessionfinish` برای نوشتن گزارش‌ها
 
-جزئیات بیشتر در [docs/how-it-works.md](docs/how-it-works.md) و ساختار JSON در [docs/report-schema.md](docs/report-schema.md).
+جزئیات بیشتر در [docs/how-it-works.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/how-it-works.md) و ساختار JSON در [docs/report-schema.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/docs/report-schema.md).
 
 ## محدودیت‌ها
 
@@ -249,16 +247,16 @@ python scripts/make_assets.py
 
 ## مشارکت
 
-فایل [CONTRIBUTING.md](CONTRIBUTING.md) را ببینید. تغییرهای کوچک و تست‌شده خوش‌آمدند. لطفاً رمز واقعی، نام تست‌های خصوصی یا دادهٔ سازمانی را در گزارش‌ها و issueها قرار ندهید.
+فایل [CONTRIBUTING.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/CONTRIBUTING.md) را ببینید. تغییرهای کوچک و تست‌شده خوش‌آمدند. لطفاً رمز واقعی، نام تست‌های خصوصی یا دادهٔ سازمانی را در گزارش‌ها و issueها قرار ندهید.
 
 ## پشتیبانی و امنیت
 
-- پشتیبانی: [SUPPORT.md](SUPPORT.md)
-- امنیت: [SECURITY.md](SECURITY.md)
-- منشور اخلاقی: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- پشتیبانی: [SUPPORT.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/SUPPORT.md)
+- امنیت: [SECURITY.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/SECURITY.md)
+- منشور اخلاقی: [CODE_OF_CONDUCT.md](https://github.com/WMiliya/pytest-fixture-lens/blob/main/CODE_OF_CONDUCT.md)
 
 ## پروانه
 
-MIT. فایل [LICENSE](LICENSE) را ببینید.
+MIT. فایل [LICENSE](https://github.com/WMiliya/pytest-fixture-lens/blob/main/LICENSE) را ببینید.
 
 </div>
