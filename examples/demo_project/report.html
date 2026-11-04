@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FixtureLens report</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b1020; --panel: #121a2b; --panel2: #0f1626; --line: #243049;
+    --text: #e6edf7; --muted: #93a4bd; --accent: #7dd3fc; --good: #34d399;
+    --warn: #fbbf24; --bad: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(1200px 600px at 10% -10%, #182444 0%, var(--bg) 55%); color: var(--text); font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  header { padding: 28px 32px 10px; }
+  h1 { margin: 0; font-size: 26px; letter-spacing: .2px; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--muted); margin-top: 6px; }
+  main { padding: 18px 32px 48px; max-width: 1280px; margin: 0 auto; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 14px 0 22px; }
+  .card { background: linear-gradient(180deg, var(--panel), var(--panel2)); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .card .k { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .8px; }
+  .card .v { font-size: 26px; font-weight: 700; margin-top: 6px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin: 18px 0; }
+  .panel-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  h2 { margin: 0; font-size: 17px; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; }
+  input, select { background: #0b1322; color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; outline: none; }
+  input:focus, select:focus { border-color: var(--accent); }
+  .table-wrap { overflow: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
+  tr:hover td { background: rgba(125, 211, 252, .05); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); background: #0b1322; }
+  .scope-session { color: #c4b5fd; border-color: #7c3aed; }
+  .scope-package { color: #93c5fd; border-color: #2563eb; }
+  .scope-module { color: #67e8f9; border-color: #0891b2; }
+  .scope-class { color: #fcd34d; border-color: #d97706; }
+  .scope-function { color: #86efac; border-color: #16a34a; }
+  .ok { color: var(--good); } .failed, .error { color: var(--bad); } .skipped { color: var(--warn); } .unknown { color: var(--muted); }
+  .graph-wrap { display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+  @media (max-width: 900px) { .graph-wrap { grid-template-columns: 1fr; } }
+  .graph-scroll { overflow: auto; border: 1px solid var(--line); border-radius: 12px; background: #0b1322; }
+  svg { display: block; }
+  .node { cursor: pointer; }
+  .node rect { fill: #101a2e; stroke-width: 1.5; }
+  .node text { fill: var(--text); font-size: 12px; }
+  .node .meta { fill: var(--muted); font-size: 10.5px; }
+  .node.dim { opacity: .25; }
+  .node.selected rect { stroke: var(--accent) !important; stroke-width: 2.5; }
+  .edge { stroke: #3b4a6b; stroke-width: 1.4; fill: none; }
+  #details { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #0b1322; min-height: 160px; }
+  #details h3 { margin: 0 0 8px; font-size: 15px; }
+  #details .row { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dashed #1d2942; }
+  #details .row span:first-child { color: var(--muted); }
+  details.test { border: 1px solid var(--line); border-radius: 12px; margin: 10px 0; background: #0b1322; }
+  details.test summary { cursor: pointer; padding: 12px 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  details.test .body { padding: 0 14px 14px; overflow: auto; }
+  ul.limits { margin: 8px 0 0; padding-left: 20px; color: var(--muted); }
+  footer { color: var(--muted); padding: 0 32px 32px; font-size: 12px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Fixture<span>Lens</span></h1>
+  <div class="sub">Observed pytest fixture setup · dependency graph · reuse · offline report</div>
+</header>
+<main>
+  <section class="cards" id="cards"></section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Setup hotspots</h2>
+      <div class="controls">
+        <input id="search" type="search" placeholder="Filter fixtures…" aria-label="Filter fixtures">
+        <select id="scope" aria-label="Filter by scope">
+          <option value="">All scopes</option>
+          <option>session</option><option>package</option><option>module</option>
+          <option>class</option><option>function</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="hotspots">
+        <thead><tr>
+          <th>Fixture</th><th>Scope</th><th>Source</th><th>Requested</th><th>Setups</th>
+          <th>Reused</th><th>Exclusive</th><th>Inclusive</th><th>Avg exclusive</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Fixture dependency graph</h2><div class="sub">Click a node for details</div></div>
+    <div class="graph-wrap">
+      <div class="graph-scroll"><svg id="graph" role="img" aria-label="Fixture dependency graph"></svg></div>
+      <aside id="details"><h3>No fixture selected</h3><div class="sub">Click a node in the graph.</div></aside>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Tests</h2><div class="sub" id="test-count"></div></div>
+    <div id="tests"></div>
+  </section>
+
+  <section class="panel">
+    <h2>What this report does not claim</h2>
+    <ul class="limits" id="limits"></ul>
+  </section>
+</main>
+<footer>Generated by FixtureLens. Self-contained: no network, no external assets.</footer>
+
+<script type="application/json" id="fixture-lens-data">{"schema_version":1,"generator":{"name":"fixturelens","version":"0.1.0"},"summary":{"tests":8,"fixtures":4,"setup_exclusive_ms":121.370341,"reused_setups":8,"failed_tests":0,"exitstatus":0},"hotspots":["3d9df5b266dc664d","b855215be9d9fd72","ff818b9b14a36d0a","689af0d23d701267"],"fixtures":[{"key":"ff818b9b14a36d0a","name":"settings","scope":"session","source":"examples/demo_project/tests/conftest.py","line":8,"dependencies":[],"requested_count":6,"setup_count":1,"reuse_count":5,"total_exclusive_ms":30.169974,"total_inclusive_ms":30.169974,"param_indices":[],"avg_exclusive_ms":30.169974},{"key":"b855215be9d9fd72","name":"database","scope":"module","source":"examples/demo_project/tests/conftest.py","line":14,"dependencies":["ff818b9b14a36d0a"],"requested_count":5,"setup_count":2,"reuse_count":3,"total_exclusive_ms":40.307,"total_inclusive_ms":40.307,"param_indices":[],"avg_exclusive_ms":20.1535},{"key":"3d9df5b266dc664d","name":"client","scope":"function","source":"examples/demo_project/tests/conftest.py","line":26,"dependencies":["b855215be9d9fd72"],"requested_count":4,"setup_count":4,"reuse_count":0,"total_exclusive_ms":40.551741,"total_inclusive_ms":40.551741,"param_indices":[],"avg_exclusive_ms":10.137935},{"key":"689af0d23d701267","name":"locale","scope":"function","source":"examples/demo_project/tests/conftest.py","line":20,"dependencies":[],"requested_count":2,"setup_count":2,"reuse_count":0,"total_exclusive_ms":10.341626,"total_inclusive_ms":10.341626,"param_indices":[0,1],"avg_exclusive_ms":5.170813}],"tests":[{"nodeid":"examples/demo_project/tests/test_checkout.py::test_checkout_uses_database","location":["examples/demo_project/tests/test_checkout.py",0,"test_checkout_uses_database"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":60.940518},"call":{"outcome":"passed","duration_ms":0.10646},"teardown":{"outcome":"passed","duration_ms":0.077412}},"requested":["ff818b9b14a36d0a","b855215be9d9fd72","3d9df5b266dc664d"],"setup_events":[{"key":"ff818b9b14a36d0a","name":"settings","scope":"session","param_index":null,"inclusive_ms":30.169974,"exclusive_ms":30.169974,"failed":false},{"key":"b855215be9d9fd72","name":"database","scope":"module","param_index":null,"inclusive_ms":20.16724,"exclusive_ms":20.16724,"failed":false},{"key":"3d9df5b266dc664d","name":"client","scope":"function","param_index":null,"inclusive_ms":10.134011,"exclusive_ms":10.134011,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_checkout.py::test_checkout_reads_settings","location":["examples/demo_project/tests/test_checkout.py",4,"test_checkout_reads_settings"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":10.271878},"call":{"outcome":"passed","duration_ms":0.066349},"teardown":{"outcome":"passed","duration_ms":0.057894}},"requested":["ff818b9b14a36d0a","b855215be9d9fd72","3d9df5b266dc664d"],"setup_events":[{"key":"3d9df5b266dc664d","name":"client","scope":"function","param_index":null,"inclusive_ms":10.132169,"exclusive_ms":10.132169,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_checkout.py::test_settings_are_shared","location":["examples/demo_project/tests/test_checkout.py",8,"test_settings_are_shared"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":0.079724},"call":{"outcome":"passed","duration_ms":0.05801},"teardown":{"outcome":"passed","duration_ms":0.065804}},"requested":["ff818b9b14a36d0a"],"setup_events":[]},{"nodeid":"examples/demo_project/tests/test_locale.py::test_locale_is_supported[en]","location":["examples/demo_project/tests/test_locale.py",0,"test_locale_is_supported[en]"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":5.336581},"call":{"outcome":"passed","duration_ms":0.051286},"teardown":{"outcome":"passed","duration_ms":0.048425}},"requested":["689af0d23d701267"],"setup_events":[{"key":"689af0d23d701267","name":"locale","scope":"function","param_index":0,"inclusive_ms":5.146492,"exclusive_ms":5.146492,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_locale.py::test_locale_is_supported[fr]","location":["examples/demo_project/tests/test_locale.py",0,"test_locale_is_supported[fr]"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":5.403827},"call":{"outcome":"passed","duration_ms":0.067866},"teardown":{"outcome":"passed","duration_ms":0.050545}},"requested":["689af0d23d701267"],"setup_events":[{"key":"689af0d23d701267","name":"locale","scope":"function","param_index":1,"inclusive_ms":5.195134,"exclusive_ms":5.195134,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_refunds.py::test_refund_uses_database","location":["examples/demo_project/tests/test_refunds.py",0,"test_refund_uses_database"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":30.489752},"call":{"outcome":"passed","duration_ms":0.0665},"teardown":{"outcome":"passed","duration_ms":0.050836}},"requested":["ff818b9b14a36d0a","b855215be9d9fd72","3d9df5b266dc664d"],"setup_events":[{"key":"b855215be9d9fd72","name":"database","scope":"module","param_index":null,"inclusive_ms":20.13976,"exclusive_ms":20.13976,"failed":false},{"key":"3d9df5b266dc664d","name":"client","scope":"function","param_index":null,"inclusive_ms":10.145236,"exclusive_ms":10.145236,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_refunds.py::test_refund_reads_settings","location":["examples/demo_project/tests/test_refunds.py",4,"test_refund_reads_settings"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":10.301231},"call":{"outcome":"passed","duration_ms":0.072893},"teardown":{"outcome":"passed","duration_ms":0.05049}},"requested":["ff818b9b14a36d0a","b855215be9d9fd72","3d9df5b266dc664d"],"setup_events":[{"key":"3d9df5b266dc664d","name":"client","scope":"function","param_index":null,"inclusive_ms":10.140325,"exclusive_ms":10.140325,"failed":false}]},{"nodeid":"examples/demo_project/tests/test_refunds.py::test_database_module_scope","location":["examples/demo_project/tests/test_refunds.py",8,"test_database_module_scope"],"outcome":"passed","phases":{"setup":{"outcome":"passed","duration_ms":0.06835},"call":{"outcome":"passed","duration_ms":0.096639},"teardown":{"outcome":"passed","duration_ms":0.255376}},"requested":["ff818b9b14a36d0a","b855215be9d9fd72"],"setup_events":[]}],"limitations":["Setup spans only; teardown time is not measured in this MVP.","Exclusive setup time subtracts nested fixture setup spans to reduce double counting.","The dependency graph is built from fixture arguments; dynamic getfixturevalue() calls may be missing.","Parametrized instances are aggregated by fixture function; observed parameter indices are kept on events.","pytest-xdist distributed runs are not supported yet.","Timings are wall-clock measurements from this run, not a statistically stable benchmark."]}</script>
+<script>
+(function () {
+  "use strict";
+  const data = JSON.parse(document.getElementById("fixture-lens-data").textContent);
+  const fixtures = new Map(data.fixtures.map(f => [f.key, f]));
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const ms = v => (v >= 1000 ? (v / 1000).toFixed(2) + " s" : v.toFixed(2) + " ms");
+  const scopeClass = s => "scope-" + esc(s);
+
+  // Cards
+  const s = data.summary;
+  document.getElementById("cards").innerHTML = [
+    ["Tests", s.tests], ["Fixtures observed", s.fixtures],
+    ["Exclusive setup", ms(s.setup_exclusive_ms)], ["Reused setups", s.reused_setups],
+    ["Failed / error", s.failed_tests]
+  ].map(([k, v]) => `<div class="card"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join("");
+
+  // Hotspots
+  const tbody = document.querySelector("#hotspots tbody");
+  function matches(f) {
+    const q = document.getElementById("search").value.trim().toLowerCase();
+    const sc = document.getElementById("scope").value;
+    return (!q || f.name.toLowerCase().includes(q) || f.source.toLowerCase().includes(q)) && (!sc || f.scope === sc);
+  }
+  function renderHotspots() {
+    const rows = data.fixtures.filter(matches).sort((a, b) => b.total_exclusive_ms - a.total_exclusive_ms);
+    tbody.innerHTML = rows.map(f => `<tr data-key="${esc(f.key)}">
+      <td class="mono">${esc(f.name)}</td>
+      <td><span class="badge ${scopeClass(f.scope)}">${esc(f.scope)}</span></td>
+      <td class="mono">${esc(f.source)}:${f.line}</td>
+      <td>${f.requested_count}</td><td>${f.setup_count}</td><td>${f.reuse_count}</td>
+      <td>${ms(f.total_exclusive_ms)}</td><td>${ms(f.total_inclusive_ms)}</td><td>${ms(f.avg_exclusive_ms)}</td>
+    </tr>`).join("") || `<tr><td colspan="9" class="sub">No fixtures match the filter.</td></tr>`;
+    dimGraph();
+  }
+  document.getElementById("search").addEventListener("input", renderHotspots);
+  document.getElementById("scope").addEventListener("change", renderHotspots);
+
+  // Graph layout: depth = longest dependency chain.
+  const depthCache = new Map();
+  function depth(f, seen) {
+    if (depthCache.has(f.key)) return depthCache.get(f.key);
+    if (seen.has(f.key)) return 0;
+    seen.add(f.key);
+    const d = f.dependencies.length ? Math.max(...f.dependencies.map(k => depth(fixtures.get(k) || {key:k, dependencies:[]}, seen))) + 1 : 0;
+    depthCache.set(f.key, d);
+    return d;
+  }
+  const nodes = data.fixtures.map(f => ({ f, depth: depth(f, new Set()) }));
+  const byDepth = new Map();
+  nodes.forEach(n => { if (!byDepth.has(n.depth)) byDepth.set(n.depth, []); byDepth.get(n.depth).push(n); });
+  const colW = 230, rowH = 74, padX = 30, padY = 30, nodeW = 190, nodeH = 52;
+  const pos = new Map();
+  let maxRows = 0;
+  [...byDepth.entries()].sort((a,b)=>a[0]-b[0]).forEach(([d, list]) => {
+    maxRows = Math.max(maxRows, list.length);
+    list.forEach((n, i) => pos.set(n.f.key, { x: padX + d * colW, y: padY + i * rowH }));
+  });
+  const width = padX * 2 + (Math.max(0, ...nodes.map(n => n.depth)) + 1) * colW;
+  const height = padY * 2 + Math.max(1, maxRows) * rowH;
+  const svg = document.getElementById("graph");
+  svg.setAttribute("width", width); svg.setAttribute("height", height);
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  const scopeStroke = { session:"#7c3aed", package:"#2563eb", module:"#0891b2", class:"#d97706", function:"#16a34a" };
+  let edges = "", rects = "";
+  nodes.forEach(({ f }) => {
+    const p = pos.get(f.key);
+    f.dependencies.forEach(k => {
+      const q = pos.get(k); if (!q) return;
+      const x1 = q.x + nodeW, y1 = q.y + nodeH / 2, x2 = p.x, y2 = p.y + nodeH / 2;
+      const mx = (x1 + x2) / 2;
+      edges += `<path class="edge" d="M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}"/>`;
+    });
+    const stroke = scopeStroke[f.scope] || "#64748b";
+    rects += `<g class="node" data-key="${esc(f.key)}" transform="translate(${p.x},${p.y})">
+      <rect width="${nodeW}" height="${nodeH}" rx="10" stroke="${stroke}"/>
+      <text x="12" y="21">${esc(f.name.length > 24 ? f.name.slice(0,23)+"…" : f.name)}</text>
+      <text class="meta" x="12" y="38">${esc(f.scope)} · ${ms(f.total_exclusive_ms)} · ${f.setup_count}×</text>
+    </g>`;
+  });
+  svg.innerHTML = edges + rects;
+
+  function dimGraph() {
+    svg.querySelectorAll(".node").forEach(el => {
+      const f = fixtures.get(el.dataset.key);
+      el.classList.toggle("dim", !matches(f));
+    });
+  }
+  function select(key) {
+    svg.querySelectorAll(".node").forEach(el => el.classList.toggle("selected", el.dataset.key === key));
+    const f = fixtures.get(key); if (!f) return;
+    const deps = f.dependencies.map(k => (fixtures.get(k) || {}).name || k).join(", ") || "—";
+    document.getElementById("details").innerHTML = `
+      <h3 class="mono">${esc(f.name)}</h3>
+      <div class="row"><span>Scope</span><span class="badge ${scopeClass(f.scope)}">${esc(f.scope)}</span></div>
+      <div class="row"><span>Source</span><span class="mono">${esc(f.source)}:${f.line}</span></div>
+      <div class="row"><span>Depends on</span><span class="mono">${esc(deps)}</span></div>
+      <div class="row"><span>Requested</span><span>${f.requested_count}</span></div>
+      <div class="row"><span>Setups</span><span>${f.setup_count}</span></div>
+      <div class="row"><span>Reused</span><span>${f.reuse_count}</span></div>
+      <div class="row"><span>Exclusive</span><span>${ms(f.total_exclusive_ms)}</span></div>
+      <div class="row"><span>Inclusive</span><span>${ms(f.total_inclusive_ms)}</span></div>
+      <div class="row"><span>Param indices</span><span class="mono">${esc(f.param_indices.join(", ") || "—")}</span></div>`;
+  }
+  svg.addEventListener("click", e => {
+    const node = e.target.closest(".node"); if (node) select(node.dataset.key);
+  });
+  tbody.addEventListener("click", e => {
+    const row = e.target.closest("tr[data-key]"); if (row) select(row.dataset.key);
+  });
+
+  // Tests
+  document.getElementById("test-count").textContent = data.tests.length + " collected";
+  document.getElementById("tests").innerHTML = data.tests.map(t => {
+    const setupMs = t.setup_events.reduce((a, e) => a + e.exclusive_ms, 0);
+    const rows = t.setup_events.map((e, i) => `<tr>
+      <td>${i + 1}</td><td class="mono">${esc(e.name)}${e.param_index !== null ? "[" + e.param_index + "]" : ""}</td>
+      <td><span class="badge ${scopeClass(e.scope)}">${esc(e.scope)}</span></td>
+      <td>${ms(e.exclusive_ms)}</td><td>${ms(e.inclusive_ms)}</td><td>${e.failed ? "failed" : "ok"}</td>
+    </tr>`).join("") || `<tr><td colspan="6" class="sub">No fixture setup events recorded.</td></tr>`;
+    return `<details class="test"><summary>
+      <span class="badge ${esc(t.outcome)}">${esc(t.outcome)}</span>
+      <span class="mono">${esc(t.nodeid)}</span>
+      <span class="sub">setup ${ms(setupMs)}</span>
+    </summary><div class="body"><table>
+      <thead><tr><th>#</th><th>Fixture</th><th>Scope</th><th>Exclusive</th><th>Inclusive</th><th>Status</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></details>`;
+  }).join("");
+
+  document.getElementById("limits").innerHTML = data.limitations.map(l => `<li>${esc(l)}</li>`).join("");
+  renderHotspots();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "generator": {
+    "name": "fixturelens",
+    "version": "0.1.0"
+  },
+  "summary": {
+    "tests": 8,
+    "fixtures": 4,
+    "setup_exclusive_ms": 121.370341,
+    "reused_setups": 8,
+    "failed_tests": 0,
+    "exitstatus": 0
+  },
+  "hotspots": [
+    "3d9df5b266dc664d",
+    "b855215be9d9fd72",
+    "ff818b9b14a36d0a",
+    "689af0d23d701267"
+  ],
+  "fixtures": [
+    {
+      "key": "ff818b9b14a36d0a",
+      "name": "settings",
+      "scope": "session",
+      "source": "examples/demo_project/tests/conftest.py",
+      "line": 8,
+      "dependencies": [],
+      "requested_count": 6,
+      "setup_count": 1,
+      "reuse_count": 5,
+      "total_exclusive_ms": 30.169974,
+      "total_inclusive_ms": 30.169974,
+      "param_indices": [],
+      "avg_exclusive_ms": 30.169974
+    },
+    {
+      "key": "b855215be9d9fd72",
+      "name": "database",
+      "scope": "module",
+      "source": "examples/demo_project/tests/conftest.py",
+      "line": 14,
+      "dependencies": [
+        "ff818b9b14a36d0a"
+      ],
+      "requested_count": 5,
+      "setup_count": 2,
+      "reuse_count": 3,
+      "total_exclusive_ms": 40.307,
+      "total_inclusive_ms": 40.307,
+      "param_indices": [],
+      "avg_exclusive_ms": 20.1535
+    },
+    {
+      "key": "3d9df5b266dc664d",
+      "name": "client",
+      "scope": "function",
+      "source": "examples/demo_project/tests/conftest.py",
+      "line": 26,
+      "dependencies": [
+        "b855215be9d9fd72"
+      ],
+      "requested_count": 4,
+      "setup_count": 4,
+      "reuse_count": 0,
+      "total_exclusive_ms": 40.551741,
+      "total_inclusive_ms": 40.551741,
+      "param_indices": [],
+      "avg_exclusive_ms": 10.137935
+    },
+    {
+      "key": "689af0d23d701267",
+      "name": "locale",
+      "scope": "function",
+      "source": "examples/demo_project/tests/conftest.py",
+      "line": 20,
+      "dependencies": [],
+      "requested_count": 2,
+      "setup_count": 2,
+      "reuse_count": 0,
+      "total_exclusive_ms": 10.341626,
+      "total_inclusive_ms": 10.341626,
+      "param_indices": [
+        0,
+        1
+      ],
+      "avg_exclusive_ms": 5.170813
+    }
+  ],
+  "tests": [
+    {
+      "nodeid": "examples/demo_project/tests/test_checkout.py::test_checkout_uses_database",
+      "location": [
+        "examples/demo_project/tests/test_checkout.py",
+        0,
+        "test_checkout_uses_database"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 60.940518
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.10646
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.077412
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a",
+        "b855215be9d9fd72",
+        "3d9df5b266dc664d"
+      ],
+      "setup_events": [
+        {
+          "key": "ff818b9b14a36d0a",
+          "name": "settings",
+          "scope": "session",
+          "param_index": null,
+          "inclusive_ms": 30.169974,
+          "exclusive_ms": 30.169974,
+          "failed": false
+        },
+        {
+          "key": "b855215be9d9fd72",
+          "name": "database",
+          "scope": "module",
+          "param_index": null,
+          "inclusive_ms": 20.16724,
+          "exclusive_ms": 20.16724,
+          "failed": false
+        },
+        {
+          "key": "3d9df5b266dc664d",
+          "name": "client",
+          "scope": "function",
+          "param_index": null,
+          "inclusive_ms": 10.134011,
+          "exclusive_ms": 10.134011,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_checkout.py::test_checkout_reads_settings",
+      "location": [
+        "examples/demo_project/tests/test_checkout.py",
+        4,
+        "test_checkout_reads_settings"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 10.271878
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.066349
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.057894
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a",
+        "b855215be9d9fd72",
+        "3d9df5b266dc664d"
+      ],
+      "setup_events": [
+        {
+          "key": "3d9df5b266dc664d",
+          "name": "client",
+          "scope": "function",
+          "param_index": null,
+          "inclusive_ms": 10.132169,
+          "exclusive_ms": 10.132169,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_checkout.py::test_settings_are_shared",
+      "location": [
+        "examples/demo_project/tests/test_checkout.py",
+        8,
+        "test_settings_are_shared"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 0.079724
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.05801
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.065804
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a"
+      ],
+      "setup_events": []
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_locale.py::test_locale_is_supported[en]",
+      "location": [
+        "examples/demo_project/tests/test_locale.py",
+        0,
+        "test_locale_is_supported[en]"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 5.336581
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.051286
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.048425
+        }
+      },
+      "requested": [
+        "689af0d23d701267"
+      ],
+      "setup_events": [
+        {
+          "key": "689af0d23d701267",
+          "name": "locale",
+          "scope": "function",
+          "param_index": 0,
+          "inclusive_ms": 5.146492,
+          "exclusive_ms": 5.146492,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_locale.py::test_locale_is_supported[fr]",
+      "location": [
+        "examples/demo_project/tests/test_locale.py",
+        0,
+        "test_locale_is_supported[fr]"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 5.403827
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.067866
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.050545
+        }
+      },
+      "requested": [
+        "689af0d23d701267"
+      ],
+      "setup_events": [
+        {
+          "key": "689af0d23d701267",
+          "name": "locale",
+          "scope": "function",
+          "param_index": 1,
+          "inclusive_ms": 5.195134,
+          "exclusive_ms": 5.195134,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_refunds.py::test_refund_uses_database",
+      "location": [
+        "examples/demo_project/tests/test_refunds.py",
+        0,
+        "test_refund_uses_database"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 30.489752
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.0665
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.050836
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a",
+        "b855215be9d9fd72",
+        "3d9df5b266dc664d"
+      ],
+      "setup_events": [
+        {
+          "key": "b855215be9d9fd72",
+          "name": "database",
+          "scope": "module",
+          "param_index": null,
+          "inclusive_ms": 20.13976,
+          "exclusive_ms": 20.13976,
+          "failed": false
+        },
+        {
+          "key": "3d9df5b266dc664d",
+          "name": "client",
+          "scope": "function",
+          "param_index": null,
+          "inclusive_ms": 10.145236,
+          "exclusive_ms": 10.145236,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_refunds.py::test_refund_reads_settings",
+      "location": [
+        "examples/demo_project/tests/test_refunds.py",
+        4,
+        "test_refund_reads_settings"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 10.301231
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.072893
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.05049
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a",
+        "b855215be9d9fd72",
+        "3d9df5b266dc664d"
+      ],
+      "setup_events": [
+        {
+          "key": "3d9df5b266dc664d",
+          "name": "client",
+          "scope": "function",
+          "param_index": null,
+          "inclusive_ms": 10.140325,
+          "exclusive_ms": 10.140325,
+          "failed": false
+        }
+      ]
+    },
+    {
+      "nodeid": "examples/demo_project/tests/test_refunds.py::test_database_module_scope",
+      "location": [
+        "examples/demo_project/tests/test_refunds.py",
+        8,
+        "test_database_module_scope"
+      ],
+      "outcome": "passed",
+      "phases": {
+        "setup": {
+          "outcome": "passed",
+          "duration_ms": 0.06835
+        },
+        "call": {
+          "outcome": "passed",
+          "duration_ms": 0.096639
+        },
+        "teardown": {
+          "outcome": "passed",
+          "duration_ms": 0.255376
+        }
+      },
+      "requested": [
+        "ff818b9b14a36d0a",
+        "b855215be9d9fd72"
+      ],
+      "setup_events": []
+    }
+  ],
+  "limitations": [
+    "Setup spans only; teardown time is not measured in this MVP.",
+    "Exclusive setup time subtracts nested fixture setup spans to reduce double counting.",
+    "The dependency graph is built from fixture arguments; dynamic getfixturevalue() calls may be missing.",
+    "Parametrized instances are aggregated by fixture function; observed parameter indices are kept on events.",
+    "pytest-xdist distributed runs are not supported yet.",
+    "Timings are wall-clock measurements from this run, not a statistically stable benchmark."
+  ]
+}
