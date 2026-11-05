@@ -20,6 +20,10 @@ No. The HTML report is self-contained and the plugin does not make network calls
 
 Review it first. Reports can contain test node IDs, fixture names, and source paths. Do not share reports with private or proprietary names.
 
+## Does it work on Windows?
+
+Yes. The plugin is pure Python and the report is a plain HTML file.
+
 ## Does it support pytest-xdist?
 
 Not yet. Distributed runs are rejected with a clear error.
