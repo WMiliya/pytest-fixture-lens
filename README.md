@@ -67,6 +67,8 @@ Install from PyPI:
 ```bash
 pip install pytest-fixture-lens
 ```
+Requires Python 3.10 or newer.
+
 
 Or install from a checkout:
 
